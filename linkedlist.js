@@ -110,8 +110,18 @@ deleteLast() {
           callback(noAtual.data);
           noAtual = noAtual.next;
         }
-      }
-
+    }
+//------------------------------------------------------------
+    getFirst() {
+        return this.head.data;
+    }
+//------------------------------------------------------------
+    getLast() {
+      return this.tail.data;
+    }
+//------------------------------------------------------------
   }// fim classe LinkedList
+  
+  
   
   
