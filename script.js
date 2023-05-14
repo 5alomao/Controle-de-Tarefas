@@ -1,132 +1,141 @@
- // Crie uma instância da fila
- let minhaLista = new LinkedList();
- //limpa campo
- 
- //ver inicio da fila
- function verInicio(){
-    alert(`Primeiro da Fila: \n`+ minhaLista.getFirst());
-  }
- //ver final da fila
- function verFim(){
-  alert(`Último da Fila: \n`+ minhaLista.getLast());
-  }
- // Função para adicionar um elemento 
- function adicionarElemento() {
-    const descricao = document.getElementById("txtnovaTarefa");
-    const prioridade = document.getElementById("txtnovaPrioridade");
-    const indice = document.getElementById("txtIndice");
+// Crie uma instância da fila
+let minhaLista = new LinkedList();
 
-    if (descricao.value === "" || prioridade.value === "") {
-      alert("Preencha todos os campos antes de adicionar à fila!");
-      return;
-    }
-    let novaTarefa = new Tarefa(descricao.value,prioridade.value,obterDataAtual(),obterHoraAtual());
-    console.log(novaTarefa.toString());
-    alert(`Tarefa ${novaTarefa.descricao} com prioridade ${novaTarefa.prioridade} inserida no dia ${novaTarefa.data} as ${novaTarefa.hora}`);
-    minhaLista.addAtIndex(indice.value,novaTarefa);
-    mostrarLista();
-    descricao.value = "";
-    prioridade.value = "";
-    indice.value = "";
-    descricao.focus();  
-  }
-  function addInicio() {
-    const descricao = document.getElementById("txtnovaTarefa");
-    const prioridade = document.getElementById("txtnovaPrioridade");
-    const indice = document.getElementById("txtIndice");
+// Verificar o início da fila
+function verInicio() {
+  if (minhaLista.getFirst() === null)
+    alert(`Lista Vazia!`);
+  else
+    alert(`Primeiro da Fila: \n` + minhaLista.getFirst());
+}
 
-    if (descricao.value === "" || prioridade.value === "") {
-      alert("Preencha todos os campos antes de adicionar à fila!");
-      return;
-    }
-    let novaTarefa = new Tarefa(descricao.value,prioridade.value,obterDataAtual(),obterHoraAtual());
-    console.log(novaTarefa.toString());
-    alert(`Tarefa ${novaTarefa.descricao} com prioridade ${novaTarefa.prioridade} inserida no dia ${novaTarefa.data} as ${novaTarefa.hora}`);
-    minhaLista.addFirst(novaTarefa);
-    mostrarLista();
-    descricao.value = "";
-    prioridade.value = "";
-    indice.value = "";
-    descricao.focus();  
-  }
-  function addFim() {
-    const descricao = document.getElementById("txtnovaTarefa");
-    const prioridade = document.getElementById("txtnovaPrioridade");
-    const indice = document.getElementById("txtIndice");
+// Verificar o final da fila
+function verFim() {
+  if (minhaLista.getFirst() === null)
+    alert(`Lista Vazia!`);
+  else
+    alert(`Último da Fila: \n` + minhaLista.getLast());
+}
 
-    if (descricao.value === "" || prioridade.value === "") {
-      alert("Preencha todos os campos antes de adicionar à fila!");
-      return;
-    }
-    let novaTarefa = new Tarefa(descricao.value,prioridade.value,obterDataAtual(),obterHoraAtual());
-    console.log(novaTarefa.toString());
-    alert(`Tarefa ${novaTarefa.descricao} com prioridade ${novaTarefa.prioridade} inserida no dia ${novaTarefa.data} as ${novaTarefa.hora}`);
-    minhaLista.addLast(indice.value,novaTarefa);
-    mostrarLista();
-    descricao.value = "";
-    prioridade.value = "";
-    indice.value = "";
-    descricao.focus();  
-  }
-  
-  // Função para adicionar um elemento ordenado 
-  function adicionarOrdenado() {
-    const descricao = document.getElementById("txtnovaTarefa").value.trim();
-    const prioridade = document.getElementById("txtnovaPrioridade").value.trim();
-    
-    const novaTarefa = new Tarefa(descricao, prioridade, obterDataAtual(), obterHoraAtual());
-    let indice = 0;
-    let novaPrioridade = parseInt(novaTarefa.prioridade);
-    let retorno = false;
+function limpaCampo() {
+  txtnovaTarefa.value = "";
+  txtnovaPrioridade.value = "";
+  txtIndice.value = "";
+}
 
-    if(minhaLista.isEmpty()){
-        retorno = minhaLista.addFirst(novaTarefa);
-        descricao.value = "";
-        prioridade.value = "";
-        indice.value = "";
-    }     
-    else if(novaPrioridade >= minhaLista.getLast().prioridade ){
-        retorno = minhaLista.addLast(novaTarefa);
-        descricao.value = "";
-        prioridade.value = "";
-        indice.value = "";
-    }
-    else if(novaPrioridade < minhaLista.getFirst().prioridade  ){
-        retorno = minhaLista.addFirst(novaTarefa);
-        descricao.value = "";
-        prioridade.value = "";
-        indice.value = "";
-    }
-    else{
-        minhaLista.forEach((item) => {
-        console.log(item);
-          if(novaPrioridade >= item.prioridade){
-            indice++;
-          }
-        });
-       minhaLista.addAtIndex(indice,novaTarefa);
-       descricao.value = "";
-       prioridade.value = "";
-       indice.value = "";
-    }
-    mostrarLista();
- }
+// Função para adicionar um elemento
+function adicionarElemento() {
+  const descricao = document.getElementById("txtnovaTarefa");
+  const prioridade = document.getElementById("txtnovaPrioridade");
+  const indice = document.getElementById("txtIndice");
+
+  if (descricao.value === "" || prioridade.value === "") {
+    alert("Preencha todos os campos antes de adicionar à fila!");
+    return;
+  }
+  let novaTarefa = new Tarefa(descricao.value, prioridade.value, obterDataAtual(), obterHoraAtual());
+  alert(`Tarefa: ${novaTarefa.descricao} Inserida !`);
+  minhaLista.addAtIndex(indice.value, novaTarefa);
+  mostrarLista();
+  descricao.value = "";
+  prioridade.value = "";
+  indice.value = "";
+  descricao.focus();
+}
+
+// Função para adicionar um elemento ordenado
+function adicionarOrdenado() {
+  const descricao = document.getElementById("txtnovaTarefa").value.trim();
+  const prioridade = document.getElementById("txtnovaPrioridade").value.trim();
+
+  if (descricao === "" || prioridade === "") {
+    alert("Preencha todos os campos!");
+    return;
+  }
+
+  const novaTarefa = new Tarefa(descricao, prioridade, obterDataAtual(), obterHoraAtual());
+  let indice = 0;
+  let novaPrioridade = parseInt(novaTarefa.prioridade);
+  let retorno = false;
+
+  if (minhaLista.isEmpty()) {
+    retorno = minhaLista.addFirst(novaTarefa);
+    limpaCampo();
+  } else if (novaPrioridade >= minhaLista.getLast().prioridade) {
+    retorno = minhaLista.addLast(novaTarefa);
+    limpaCampo();
+  } else if (novaPrioridade < minhaLista.getFirst().prioridade) {
+    retorno = minhaLista.addFirst(novaTarefa);
+    limpaCampo();
+  } else {
+    minhaLista.forEach((item) => {
+      if (novaPrioridade >= item.prioridade) {
+        indice++;
+      }
+    });
+    minhaLista.addAtIndex(indice, novaTarefa);
+    limpaCampo();
+  }
+  alert(`Tarefa: ${novaTarefa.descricao} Inserida !`);
+  mostrarLista();
+}
+
+// Função para remover o primeiro elemento da fila
+function removerElemento() {
+  if (minhaLista.isEmpty())
+    alert("Lista vazia!");
+  else {
+    // remover e mostrar mensagem de remoção
+    let rem = minhaLista.deleteFirst();
+    mostrarMensagemRemocao(rem);
+  }
+  mostrarLista();
+}
 //--------------------------------------------------------------------------------------------
- // Função para remover o primeiro elemento da fila
- function removerElemento() {
-    if(minhaLista.isEmpty()) 
-      alert("Lista vazia!");
-    else{  
-      // remover e mostrar mensagem de remocao
+function tarefaMaisAntiga() {
+  
+  let tarefaMaisAntiga = minhaLista.getFirst();
+
+  minhaLista.forEach((tarefa) => {
+    const dataHoraTarefa = new Date(`${converterDataFormatoISO8601(tarefa.data)}T${tarefa.hora}`);
+    const dataHoraTarefaMaisAntiga = new Date(`${converterDataFormatoISO8601(tarefaMaisAntiga.data)}T${tarefaMaisAntiga.hora}`);
+
+    if (dataHoraTarefa < dataHoraTarefaMaisAntiga) {
+      tarefaMaisAntiga = tarefa;
     }
- }
+  });
+  return tarefaMaisAntiga;
+  
+}
+//--------------------------------------------------------------------------------------------
+function exibirTarefaMaisAntiga() {
+  const maisAntiga = tarefaMaisAntiga();
+  
+  if (maisAntiga === null) {
+    alert("Lista vazia!");
+  } else {
+    alert("Tarefa mais antiga: \n" + maisAntiga);
+  }
+}
 
 //--------------------------------------------------------------------------------------------
 function mostrarMensagemRemocao(tarefaRealizada) {
+    const mensagem2 = document.getElementById("mensagem-remocao2");
+    const diasEspera = calcularDiferencaDias(tarefaRealizada.data, obterDataAtual());
+    const tempoEspera = calcularDiferencaHoras(tarefaRealizada.hora, obterHoraAtual());
+    mensagem2.innerHTML ="Resolvida: Tarefa ["+ tarefaRealizada.descricao + "] Levou "+ diasEspera +" dia(s) e " + tempoEspera; 
+    // apresentar a mensagem de remoção com dias e horas
+    mensagem2.style.display = "block";
+  }
+//--------------------------------------------------------------------------------------------
+  function mostrarProximo() {
     const mensagem = document.getElementById("mensagem-remocao");
-    mensagem.innerHTML ="Tarefa "+ tarefaRealizada.descricao + ", realizada em "; // apresentar a mensagem de remoção com dias e horas
-    mensagem.style.display = "block";
-
+  if (minhaLista.isEmpty()) {
+    mensagem.innerHTML = "Próxima: Lista vazia";
+  } else {
+    mensagem.innerHTML = "Próxima: " + minhaLista.getFirst().descricao;
+  }
+  mensagem.style.display = "block";
   }
 //-------------------------------------------------------------------------------------------- 
 // Função para atualizar a exibição da fila
@@ -145,6 +154,7 @@ function mostrarMensagemRemocao(tarefaRealizada) {
           listaElemento.appendChild(li);
         }); // for each percorre cada elemento da lista encadeada
    }
+   mostrarProximo();
  }
 //--------------------------------------------------------------------------------------------
  // funcao data
@@ -176,7 +186,7 @@ function calcularDiferencaHoras(hora1, hora2) {
   const minutos = Math.floor((diferencaSegundos % 3600) / 60);
   const segundos = diferencaSegundos % 60;
   
-  return `${horas.toString().padStart(2, '0')}:${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
+  return `${horas.toString().padStart(2, '0')} hora(s) ${minutos.toString().padStart(2, '0')} minuto(s) e ${segundos.toString().padStart(2, '0')} segundo(s)`;
 }
 //--------------------------------------------------------------------------------------------
 function calcularDiferencaDias(dataInicial, dataFinal) {

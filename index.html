@@ -16,7 +16,8 @@
       <div class="jumbotron  text-light text-center">
         <h1 class="display-4"><i class="fa fa-list-ul" aria-hidden="true"></i> Controle de Tarefas - ToDo List</h1>
       </div>
-      <div id="mensagem-remocao" class="alert alert-warning mt-3" style="display: none;"></div>
+      <div id="mensagem-remocao" class="alert alert-warning mt-3">Próximo:</div>
+      <div id="mensagem-remocao2" class="alert alert-warning mt-3">Resolvida:</div>
       <h2>Tarefas</h2>
         <p>Adicione tarefas na lista:</p>
         <div class="form-group">
@@ -38,12 +39,11 @@
       <br />
 
         
-        <button class="btn btn-info" onclick="adicionarElemento()">Add Tarefa</button>
-        <button class="btn btn-info" onclick="adicionarOrdenado()">Add - Prioridade</button>
-        <button class="btn btn-info" onclick="addInicio()">Add - Inicio</button>
-        <button class="btn btn-info" onclick="addFim()">Add - Fim</button>
-        <button class="btn btn-info" onclick="verInicio()">Primeiro da Fila</button>
-        <button class="btn btn-info" onclick="verFim()">Último da Fila</button>
+        
+        <button class="btn btn-primary" onclick="adicionarOrdenado()">Add - Prioridade</button>
+        <button class="btn btn-secondary" onclick="verInicio()">Primeira</button>
+        <button class="btn btn-secondary" onclick="verFim()">Última</button>
+        <button class="btn btn-secondary" onclick="exibirTarefaMaisAntiga()">Mais Antiga</button>
         <button class="btn btn-warning" onclick="removerElemento()">Resolver tarefa</button>
         <br />
         <br />

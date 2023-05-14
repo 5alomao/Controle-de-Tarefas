@@ -14,7 +14,6 @@ class Node {
     }
 //------------------------------------------------------------  
     addLast(data) {
-      console.log("addLast");
       const newNode = new Node(data);
       if(newNode===null)
         return false;
@@ -33,7 +32,6 @@ class Node {
     }
 //------------------------------------------------------------  
     addFirst(data) {
-      console.log("addFirst");
       const newNode = new Node(data);
       if(newNode===null)
         return false;
@@ -98,6 +96,33 @@ deleteLast() {
   return removedData; // Retorna o valor do elemento removido
 }
 //------------------------------------------------------------
+deleteAtIndex(index){
+  let indexAtual = 0;
+  noAtual = this.head;
+
+  if(this.isEmpty())
+    return null;
+
+  while(indexAtual<index){
+    noAtual = noAtual.next;
+    indexAtual++;
+  }
+
+  if(noAtual.next == null)
+    this.tail = noAtual.prev;
+  else
+    noAtual.next.prev = noAtual.prev;
+
+  if(noAtual.prev == null)
+    this.head = noAtual.next;
+  else
+    noAtual.prev.next = noAtual.next;
+
+  this.length--;
+  return noAtual.data;
+}
+
+//------------------------------------------------------------
     isEmpty() {
         return this.head === null; 
       }
@@ -113,10 +138,14 @@ deleteLast() {
     }
 //------------------------------------------------------------
     getFirst() {
-        return this.head.data;
+      if(this.isEmpty())
+        return null;
+      return this.head.data;
     }
 //------------------------------------------------------------
     getLast() {
+      if(this.isEmpty())
+          return null;
       return this.tail.data;
     }
 //------------------------------------------------------------
