@@ -117,7 +117,7 @@ function getIndexli() {
       index = tab.indexOf(this.innerHTML);
 
       if (checked === null) {
-        items[i].style.backgroundColor = "#7f8fa6";
+        items[i].style.backgroundColor = "#90ee90";
         checked = i;
       } else {
         if (checked === i) {
@@ -125,7 +125,7 @@ function getIndexli() {
           checked = null; // Restaura o valor de checked para null
         } else {
           items[checked].style.backgroundColor = "#f2f2f2";
-          items[i].style.backgroundColor = "#7f8fa6";
+          items[i].style.backgroundColor = "#90ee90";
           checked = i;
         }
       }
