@@ -1,156 +1,144 @@
 class Node {
-    constructor(data) {
-      this.data = data;
-      this.prev = null;
-      this.next = null;
-    }
-  } // fim classe Node
-//------------------------------------------------------------  
-  class LinkedList {
-    constructor() {
-      this.head = null;
-      this.tail = null;
-      this.length=0;
-    }
-//------------------------------------------------------------  
-    addLast(data) {
-      const newNode = new Node(data);
-      if(newNode===null)
-        return false;
-
-      if (this.head === null){
-        // Se a lista estiver vazia, o novo nó se torna a cabeça e a cauda
-        this.head = newNode;
-      } else {
-        // Caso contrário, adiciona o novo nó à cauda e atualiza a cauda
-        newNode.prev = this.tail; // anterior do nó = cauda
-        this.tail.next = newNode; // próx da cauda = novo nó
-      }
-      this.tail = newNode; // cauda recebe novo nó
-      this.length++;
-      return true;
-    }
-//------------------------------------------------------------  
-    addFirst(data) {
-      const newNode = new Node(data);
-      if(newNode===null)
-        return false;
-
-      if (this.tail === null){
-        // Se a lista estiver vazia, o novo nó se torna a cabeça e a cauda
-        this.tail = newNode;
-      } else {
-        // Caso contrário, adiciona o novo nó à cabeça e atualiza a cabeça
-        newNode.next = this.head; // próx do nó = inicio
-        this.head.prev = newNode; // anterior do inicio = novo nó
-      }
-      this.head = newNode; // inicio recebe novo nó
-      this.length++;
-      return true;
-    }
-//------------------------------------------------------------  
-    addAtIndex(index, data) {
-        // implementar
-        if(index <= 0)
-          return this.addFirst(data);
-        
-        if(index >= this.length)
-          return this.addLast(data);
-
-        const newNode = new Node(data);
-        let noAtual = this.head;
-        let indexAtual = 0;
-        while(indexAtual<index-1){
-          noAtual = noAtual.next;
-          indexAtual++;
-        }//
-        newNode.prev = noAtual;
-        newNode.next = noAtual.next;
-        noAtual.next = newNode;
-        newNode.next.prev = newNode;
-        this.length++;
-        return true;
-      }
-//------------------------------------------------------------  
-deleteFirst() {
-      const removedData = this.head.data; // Salva o valor do elemento removido
-      this.head = this.head.next;
-      if (this.head !== null) {
-        this.head.prev = null;
-      }
-      else
-        this.tail = null;
-      this.length--;  
-      return removedData; // Retorna o valor do elemento removido
+  constructor(data) {
+    this.data = data;
+    this.prev = null;
+    this.next = null;
   }
-//------------------------------------------------------------ 
-deleteLast() {
-  const removedData = this.tail.data; // Salva o valor do elemento removido
-  this.tail = this.tail.prev;
-  if (this.tail !== null) {
-    this.tail.next = null;
-  }
-  else
+}
+
+class LinkedList {
+  constructor() {
     this.head = null;
-  this.length--;  
-  return removedData; // Retorna o valor do elemento removido
-}
-//------------------------------------------------------------
-deleteAtIndex(index){
-  let indexAtual = 0;
-  noAtual = this.head;
-
-  if(this.isEmpty())
-    return null;
-
-  while(indexAtual<index){
-    noAtual = noAtual.next;
-    indexAtual++;
+    this.tail = null;
+    this.length = 0;
   }
 
-  if(noAtual.next == null)
-    this.tail = noAtual.prev;
-  else
-    noAtual.next.prev = noAtual.prev;
+  addLast(data) {
+    const newNode = new Node(data);
+    if (newNode === null)
+      return false;
 
-  if(noAtual.prev == null)
-    this.head = noAtual.next;
-  else
-    noAtual.prev.next = noAtual.next;
+    if (this.head === null) {
+      this.head = newNode;
+    } else {
+      newNode.prev = this.tail;
+      this.tail.next = newNode;
+    }
+    this.tail = newNode;
+    this.length++;
+    return true;
+  }
 
-  this.length--;
-  return noAtual.data;
+  addFirst(data) {
+    const newNode = new Node(data);
+    if (newNode === null)
+      return false;
+
+    if (this.tail === null) {
+      this.tail = newNode;
+    } else {
+      newNode.next = this.head;
+      this.head.prev = newNode;
+    }
+    this.head = newNode;
+    this.length++;
+    return true;
+  }
+
+  addAtIndex(index, data) {
+    if (index <= 0)
+      return this.addFirst(data);
+
+    if (index >= this.length)
+      return this.addLast(data);
+
+    const newNode = new Node(data);
+    let noAtual = this.head;
+    let indexAtual = 0;
+    while (indexAtual < index - 1) {
+      noAtual = noAtual.next;
+      indexAtual++;
+    }
+    newNode.prev = noAtual;
+    newNode.next = noAtual.next;
+    noAtual.next = newNode;
+    newNode.next.prev = newNode;
+    this.length++;
+    return true;
+  }
+
+  deleteFirst() {
+    const removedData = this.head.data;
+    this.head = this.head.next;
+    if (this.head !== null) {
+      this.head.prev = null;
+    } else {
+      this.tail = null;
+    }
+    this.length--;
+    return removedData;
+  }
+
+  deleteLast() {
+    const removedData = this.tail.data;
+    this.tail = this.tail.prev;
+    if (this.tail !== null) {
+      this.tail.next = null;
+    } else {
+      this.head = null;
+    }
+    this.length--;
+    return removedData;
+  }
+
+  deleteAtIndex(index) {
+    let indexAtual = 0;
+    let noAtual = this.head;
+
+    if (this.isEmpty())
+      return null;
+
+    while (indexAtual < index) {
+      noAtual = noAtual.next;
+      indexAtual++;
+    }
+
+    if (noAtual.next == null)
+      this.tail = noAtual.prev;
+    else
+      noAtual.next.prev = noAtual.prev;
+
+    if (noAtual.prev == null)
+      this.head = noAtual.next;
+    else
+      noAtual.prev.next = noAtual.next;
+
+    this.length--;
+    return noAtual.data;
+  }
+
+  isEmpty() {
+    return this.head === null;
+  }
+
+  forEach(callback) {
+    let noAtual = this.head;
+
+    while (noAtual !== null) {
+      callback(noAtual.data);
+      noAtual = noAtual.next;
+    }
+  }
+
+  getFirst() {
+    if (this.isEmpty())
+      return null;
+    return this.head.data;
+  }
+
+  getLast() {
+    if (this.isEmpty())
+      return null;
+    return this.tail.data;
+  }
 }
-
-//------------------------------------------------------------
-    isEmpty() {
-        return this.head === null; 
-      }
-
-//------------------------------------------------------------
-    forEach(callback) {
-        let noAtual = this.head;
-    
-        while (noAtual !== null) {
-          callback(noAtual.data);
-          noAtual = noAtual.next;
-        }
-    }
-//------------------------------------------------------------
-    getFirst() {
-      if(this.isEmpty())
-        return null;
-      return this.head.data;
-    }
-//------------------------------------------------------------
-    getLast() {
-      if(this.isEmpty())
-          return null;
-      return this.tail.data;
-    }
-//------------------------------------------------------------
-  }// fim classe LinkedList
-  
-  
-  
-  

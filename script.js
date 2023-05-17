@@ -5,22 +5,28 @@ let minhaLista = new LinkedList();
 function verInicio() {
   if (minhaLista.getFirst() === null)
     alert(`Lista Vazia!`);
-  else
-    alert(`Primeiro da Fila: \n` + minhaLista.getFirst());
+  else{
+    const diasEspera = calcularDiferencaDias(minhaLista.getFirst().data, obterDataAtual());
+    const tempoEspera = calcularDiferencaHoras(minhaLista.getFirst().hora, obterHoraAtual());
+    alert(`Primeiro da Fila: \n` + minhaLista.getFirst() + `\nTempo de Espera: \n ${diasEspera} dia(s) e ${tempoEspera}`);
+  }
+    
 }
 
 // Verificar o final da fila
 function verFim() {
   if (minhaLista.getFirst() === null)
     alert(`Lista Vazia!`);
-  else
-    alert(`Último da Fila: \n` + minhaLista.getLast());
+  else{
+    const diasEspera = calcularDiferencaDias(minhaLista.getLast().data, obterDataAtual());
+    const tempoEspera = calcularDiferencaHoras(minhaLista.getLast().hora, obterHoraAtual());
+    alert(`Último da Fila: \n` + minhaLista.getLast() + `\nTempo de Espera: \n ${diasEspera} dia(s) e ${tempoEspera}`);
+  }
 }
 
 function limpaCampo() {
   txtnovaTarefa.value = "";
   txtnovaPrioridade.value = "";
-  txtIndice.value = "";
 }
 
 // Função para adicionar um elemento
@@ -92,6 +98,66 @@ function removerElemento() {
   mostrarLista();
 }
 //--------------------------------------------------------------------------------------------
+let checked = null;
+let removido = null;
+
+function getIndexli() {
+  let items = document.querySelectorAll("#list_listadeTarefas li");
+  let index;
+
+  //adiciona valores no vetor
+  let tab = [];
+  for (let i = 0; i < items.length; i++) {
+    tab.push(items[i].innerHTML);
+  }
+
+  //pega o elemento selecionado
+  for (let i = 0; i < items.length; i++) {
+    items[i].onclick = function () {
+      index = tab.indexOf(this.innerHTML);
+
+      if (checked === null) {
+        items[i].style.backgroundColor = "#7f8fa6";
+        checked = i;
+      } else {
+        if (checked === i) {
+          items[i].style.backgroundColor = "#f2f2f2";
+          checked = null; // Restaura o valor de checked para null
+        } else {
+          items[checked].style.backgroundColor = "#f2f2f2";
+          items[i].style.backgroundColor = "#7f8fa6";
+          checked = i;
+        }
+      }
+      removido = index;
+    };
+  }
+}
+
+function removerSelecionada() {
+  if (minhaLista.isEmpty()) {
+    alert("Lista Vazia!");
+    return;
+  }
+  else if (checked === null) {
+    alert("Selecione alguma Tarefa!");
+    return;
+  }
+  else{
+    let resposta = confirm("Deseja Remover Tarefa Selecionada");
+    if (resposta) {
+      // Chama a função getIndexli() antes de executar a remoção
+      const retorno = minhaLista.deleteAtIndex(removido);
+      checked = null;
+      mostrarMensagemRemocao(retorno);
+      mostrarLista();
+    } else {
+      checked = null;
+      return;
+    }
+  }
+}
+//--------------------------------------------------------------------------------------------
 function tarefaMaisAntiga() {
   
   let tarefaMaisAntiga = minhaLista.getFirst();
@@ -114,7 +180,10 @@ function exibirTarefaMaisAntiga() {
   if (maisAntiga === null) {
     alert("Lista vazia!");
   } else {
-    alert("Tarefa mais antiga: \n" + maisAntiga);
+    const tarefa = tarefaMaisAntiga();
+    const diasEspera = calcularDiferencaDias(tarefa.data, obterDataAtual());
+    const tempoEspera = calcularDiferencaHoras(tarefa.hora, obterHoraAtual());
+    alert("Tarefa mais antiga: \n" + maisAntiga + `\nTempo de Espera: \n ${diasEspera} dia(s) e ${tempoEspera}`);
   }
 }
 
@@ -154,6 +223,7 @@ function mostrarMensagemRemocao(tarefaRealizada) {
           listaElemento.appendChild(li);
         }); // for each percorre cada elemento da lista encadeada
    }
+   retorno = getIndexli();
    mostrarProximo();
  }
 //--------------------------------------------------------------------------------------------
